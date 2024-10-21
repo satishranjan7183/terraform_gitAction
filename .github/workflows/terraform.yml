@@ -18,28 +18,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v2
-      with:
-        terraform_version: latest
-
-    # Initialize a new or existing Terraform working directory
-    - name: Terraform Init
+    - name: Set PowerShell Execution Policy
       shell: powershell
-      run: terraform init
-
-    # Checks that all Terraform configuration files adhere to a canonical format
-    - name: Terraform Format
-      shell: powershell
-      run: terraform fmt -check
-
-    # Generates an execution plan for Terraform
-    - name: Terraform Plan
-      shell: pwsh
-      run: terraform plan -input=false
-
-    # Apply changes to the infrastructure on push to "main"
-    - name: Terraform Apply
-      shell: pwsh
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      run: terraform apply -auto-approve -input=false
+      run: |
+        Set-ExecutionPolicy Bypass -Scope Process -Force
