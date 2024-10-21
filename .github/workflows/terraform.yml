@@ -25,17 +25,21 @@ jobs:
 
     # Initialize a new or existing Terraform working directory
     - name: Terraform Init
+      shell: pwsh
       run: terraform init
 
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
+      shell: pwsh
       run: terraform fmt -check
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
+      shell: pwsh
       run: terraform plan -input=false
 
     # Apply changes to the infrastructure on push to "main"
     - name: Terraform Apply
+      shell: pwsh
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: terraform apply -auto-approve -input=false
