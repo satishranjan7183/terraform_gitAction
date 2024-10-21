@@ -18,10 +18,6 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set PowerShell Execution Policy
-      run: |
-        Set-ExecutionPolicy Bypass -Scope Process -Force
-
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v2
       with:
