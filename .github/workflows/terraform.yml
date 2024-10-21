@@ -14,18 +14,34 @@ jobs:
     runs-on: self-hosted
     environment: production
     
-    steps:
+     steps:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Download Terraform
+    # Set PowerShell Execution Policy
+    - name: Set PowerShell Execution Policy
+      shell: powershell
       run: |
-        cd C:\Windows\system32
-        Invoke-WebRequest -Uri "https://releases.hashicorp.com/terraform/latest/terraform_$(curl -s https://releases.hashicorp.com/terraform/ | grep -oP '(?<=terraform_)[0-9]+\.[0-9]+\.[0-9]+(?=</a>)' | head -1)_windows_amd64.zip" -OutFile "terraform.zip"
-        Expand-Archive terraform.zip -DestinationPath $env:TEMP
-        Move-Item "$env:TEMP\terraform.exe" "C:\terraform.exe"
+        Set-ExecutionPolicy Bypass -Scope Process -Force
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
+      with:
+        terraform_version: latest
 
     - name: Terraform Init
-      run: |
-        C:\terraform.exe init
-        
+      shell: powershell
+      run: terraform init
+
+    - name: Terraform Format
+      shell: powershell
+      run: terraform fmt -check
+
+    - name: Terraform Plan
+      shell: powershell
+      run: terraform plan -input=false
+
+    - name: Terraform Apply
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      shell: powershell
+      run: terraform apply -auto-approve -input=false
