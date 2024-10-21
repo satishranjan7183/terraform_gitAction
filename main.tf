@@ -12,11 +12,8 @@ provider "azurerm" {
   subscription_id = "38d52de4-2fb6-4a85-96fb-5ba22d363e4e"
 }
 
-resource "azurerm_resource_group" "example" {
-  name     = "example"
+resource "azurerm_resource_group" "rg" {
+  name     = "satish"
   location = "West Europe"
 }
-resource "azurerm_resource_group" "ranjan" {
-  name     = "ranjan2"
-  location = "West Europe"
-}
+
