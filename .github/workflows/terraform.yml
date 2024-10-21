@@ -25,12 +25,12 @@ jobs:
 
     # Initialize a new or existing Terraform working directory
     - name: Terraform Init
-      shell: pwsh
+      shell: powershell
       run: terraform init
 
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
-      shell: pwsh
+      shell: powershell
       run: terraform fmt -check
 
     # Generates an execution plan for Terraform
