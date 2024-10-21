@@ -20,6 +20,6 @@ provider "azurerm" {
 
 resource "azurerm_resource_group" "rg" {
   name     = "satish"
-  location = "West Europe"
+  location = "Canada Central"
 }
 
